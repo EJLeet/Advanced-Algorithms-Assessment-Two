@@ -1,2 +1,2 @@
 target:
-	clang++ main.cpp kSmallest.hpp kSmallest.cpp -std=c++14 -Ofast
+	clang++ main.cpp SplitList.hpp SplitList.cpp -std=c++14 -Ofast

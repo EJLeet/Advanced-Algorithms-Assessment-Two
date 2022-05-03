@@ -1,5 +1,5 @@
 #include <iostream>
-#include "kSmallest.hpp"
+#include "SplitList.hpp"
 
 using std::cout;
 using std::endl;
@@ -13,45 +13,108 @@ int main(int argc, char** argv)
     }
 
     // create structure with filename passed
-    kSmallest lst = kSmallest(argv[1]);
+    SplitList lst = SplitList(argv[1]);
+    
+    // used for testing methods
+    std::multiset<long> test;
 
-    // print k smallest
-    cout << "List after initial construction: " << endl;
-    lst.print();
+    // initial k smallest list
+    test = lst.k_smallest();
+    for (auto i : test)
+        cout << i << " ";
+    test.clear();
+    cout << endl;
+
+    // initial sequential list
+    test = lst.sequential();
+    for (auto i : test)
+        cout << i << " ";
+    test.clear();
     cout << endl;
     
     // test add into smallest
-    cout << "List after add 3: " << endl;
+    cout << endl;
     lst.add(3);
-    lst.print();
+
+    test = lst.k_smallest();
+    for (auto i : test)
+        cout << i << " ";
+    test.clear();
+    cout << endl;
+
+    test = lst.sequential();
+    for (auto i : test)
+        cout << i << " ";
+    test.clear();
     cout << endl;
 
     // test add into largest
-    cout << "List after add 560: " << endl;
-    lst.add(560);
-    lst.print();
+    cout << endl;
+    lst.add(88);
+    test = lst.k_smallest();
+    for (auto i : test)
+        cout << i << " ";
+    test.clear();
+    cout << endl;
+
+    test = lst.sequential();
+    for (auto i : test)
+        cout << i << " ";
+    test.clear();
     cout << endl;
 
     // test delete from smallest
-    cout << "List after delete 2: " << endl;
+    cout << endl;
     lst.remove(2);
-    lst.print();
+    test = lst.k_smallest();
+    for (auto i : test)
+        cout << i << " ";
+    test.clear();
+    cout << endl;
+
+    test = lst.sequential();
+    for (auto i : test)
+        cout << i << " ";
+    test.clear();
     cout << endl;
 
     // test delete from largest
-    cout << "List after delete 89: " << endl;
-    lst.remove(89);
-    lst.print();
+    cout << endl;
+    lst.remove(67);
+    test = lst.k_smallest();
+    for (auto i : test)
+        cout << i << " ";
+    test.clear();
+    cout << endl;
 
-    // find function
+    test = lst.sequential();
+    for (auto i : test)
+        cout << i << " ";
+    test.clear();
+    cout << endl;
 
-    // test delete does not exist
+    // test delete non exist
+    cout << endl;
+    lst.remove(500);
+    test = lst.k_smallest();
+    for (auto i : test)
+        cout << i << " ";
+    test.clear();
+    cout << endl;
 
-    // print should return a list, then print it
+    test = lst.sequential();
+    for (auto i : test)
+        cout << i << " ";
+    test.clear();
+    cout << endl;
 
-    // add sequential which returns total list
-
-
+    // test search
+    cout << endl << "List Contains 500: ";
+    lst.search(500) ? cout << "True" << endl :
+                      cout << "False" << endl;
+    cout << "List Contains 78: ";
+    lst.search(78) ? cout << "True" << endl :
+                     cout << "False" << endl;
 
     return 0;
 }

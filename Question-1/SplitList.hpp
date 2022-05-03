@@ -1,9 +1,9 @@
-#ifndef kSmallest_h
-#define kSmallest_h
+#ifndef SplitList_h
+#define SplitList_h
 
 #include <set>
 
-class kSmallest
+class SplitList
 {
     // k smallest is passed from file
     long k = 0;
@@ -14,7 +14,7 @@ class kSmallest
 public:
     
     // construct from file
-    kSmallest(char* filename);
+    SplitList(char* filename);
 
     // add integer
     void add(long element);
@@ -22,8 +22,14 @@ public:
     // delete integer
     void remove(long element);
 
-    // print k smallest
-    void print();
+    // return k smallest
+    std::multiset<long> k_smallest();
+
+    // return entire structure
+    std::multiset<long> sequential();
+
+    // returns true if element is present in either list
+    bool search(long element);
 };
 
 #endif
