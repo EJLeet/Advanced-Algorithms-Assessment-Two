@@ -1,2 +1,2 @@
 target:
-	clang++ main.cpp -std=c++14 -o question1 -Ofast
+	clang++ main.cpp kSmallest.hpp kSmallest.cpp -std=c++14 -Ofast
