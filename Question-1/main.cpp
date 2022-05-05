@@ -96,17 +96,6 @@ int main(int argc, char** argv)
     // test delete non exist
     cout << endl;
     lst.remove(500);
-    test = lst.k_smallest();
-    for (auto i : test)
-        cout << i << " ";
-    test.clear();
-    cout << endl;
-
-    test = lst.sequential();
-    for (auto i : test)
-        cout << i << " ";
-    test.clear();
-    cout << endl;
 
     // test search
     cout << endl << "List Contains 500: ";

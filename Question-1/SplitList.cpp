@@ -39,7 +39,7 @@ void SplitList::add(long element)
     cout << "Attempting To Add Element " << element << endl;   
 
     // element belongs in largest
-    if (element > *largest.begin())
+    if (element >= *largest.begin())
         largest.emplace(element);
 
     // element belongs to smallest
