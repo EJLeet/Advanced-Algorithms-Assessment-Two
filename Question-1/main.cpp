@@ -8,7 +8,7 @@ int main(int argc, char** argv)
 {
     if (argc < 2)
     { // ensure file passed
-        cout << "ERROR! Expected List " << endl;
+        cout << "ERROR! Expected List" << endl;
         exit(1);
     }
 
