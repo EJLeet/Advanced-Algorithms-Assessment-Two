@@ -7,19 +7,34 @@ using std::cout;
 using std::endl;
 
 void Maze::initialise()
-{
+{/*
+    This method initialise a vector of squares
+    and sets up an indestructible walls.        */
+
     // set index and walls for each node
     for (int i = 0; i < size; i++)
     {
         square.push_back(Square(i));
 
         // first row -> top wall cant be removed
-        if (i < col - 1)
+        if (i < col)
+        {
             square[i].top = 2;
+
+            // corner case
+            if ((i + 1) % col == 0)
+                square[i].right = 2;
+        }
 
         // last row -> bot wall cant be removed
         else if (i > col * (row - 1) - 1)
+        {
             square[i].bot = 2;
+
+            // corner case
+            if (i % col == 0)
+                square[i].left = 2;
+        }
 
         // first col -> left wall cant be removed
         else if (i % col == 0)
@@ -35,11 +50,16 @@ void Maze::initialise()
     
     // last node -> right entrance
     square[size - 1].right = 0;
-
 }
 
 void Maze::destroy()
-{
+{/*
+    This method creates a disjointed set for
+    each square on the grid. It then randomly
+    knocks down available walls until the
+    start node and end goal node are in the
+    same disjointed set.                        */
+
     // create disjoint sets for every node
     DisjointSets nodes(size);
 
@@ -104,7 +124,10 @@ void Maze::destroy()
 }
 
 void Maze::display()
-{
+{/*
+    This method outputs the generated
+    maze to a .txt file.                */
+    
     std::ofstream file;
     file.open("maze.txt");
 

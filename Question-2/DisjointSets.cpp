@@ -1,4 +1,5 @@
 #include "DisjointSets.hpp"
+#include <iostream>
 
 DisjointSets::DisjointSets(int size)
 {/*
@@ -7,17 +8,16 @@ DisjointSets::DisjointSets(int size)
     passed to the constructor. It then adds 
     all nodes to parent and depth vectors.
                                             */
-    depth.resize(size);
-    parent.resize(size);
+    depth.resize(size + 1);
+    parent.resize(size + 1);
     nodes = size + 1;
 
-    for (int i = 0; i <= nodes; i++)
+    for (int i = 0; i < nodes; i++)
     {
         parent[i] = i;
         depth[i] = 1;
     }
 }
-
 
 int DisjointSets::find(int node)
 {/* 
