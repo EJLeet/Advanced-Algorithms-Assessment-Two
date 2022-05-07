@@ -8,9 +8,9 @@ DisjointSets::DisjointSets(int size)
     passed to the constructor. It then adds 
     all nodes to parent and depth vectors.
                                             */
-    nodes = size + 1;
+    nodes = size;
 
-    for (int i = 0; i <= nodes; i++)
+    for (int i = 0; i < nodes; i++)
     {
         parent.push_back(i);
         depth.push_back(i);
