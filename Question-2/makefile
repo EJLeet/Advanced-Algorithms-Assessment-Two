@@ -1,2 +1,2 @@
 target:
-	clang++ main.cpp -std=c++14 -o question2 -Ofast
+	clang++ main.cpp DisjointSets.hpp DisjointSets.cpp Maze.hpp Maze.cpp -std=c++14 -Ofast

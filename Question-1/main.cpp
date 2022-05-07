@@ -6,6 +6,7 @@ using std::endl;
 
 int main(int argc, char** argv)
 {
+    cout << endl << endl;
     if (argc < 2)
     { // ensure file passed
         cout << "ERROR! Expected List" << endl;
@@ -50,7 +51,7 @@ int main(int argc, char** argv)
 
     // test add into largest
     cout << endl;
-    lst.add(88);
+    lst.add(1);
     test = lst.k_smallest();
     for (auto i : test)
         cout << i << " ";
@@ -65,7 +66,7 @@ int main(int argc, char** argv)
 
     // test delete from smallest
     cout << endl;
-    lst.remove(2);
+    lst.remove(3);
     test = lst.k_smallest();
     for (auto i : test)
         cout << i << " ";
@@ -80,7 +81,7 @@ int main(int argc, char** argv)
 
     // test delete from largest
     cout << endl;
-    lst.remove(67);
+    lst.remove(3);
     test = lst.k_smallest();
     for (auto i : test)
         cout << i << " ";
@@ -105,5 +106,6 @@ int main(int argc, char** argv)
     lst.search(78) ? cout << "True" << endl :
                      cout << "False" << endl;
 
+    cout << endl << endl;
     return 0;
 }

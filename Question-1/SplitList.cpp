@@ -25,10 +25,10 @@ SplitList::SplitList(char* filename)
     while (file >> x)
         all.emplace(x);
     
-    // create smallest and largest multisets based on k
-    auto it = *std::next(all.begin(), k);
-    smallest.insert(all.begin(), all.lower_bound(it));
-    largest.insert(all.lower_bound(it), all.end());
+    int count = 0;
+    for (auto it : all)
+        count++ < k ? smallest.emplace(it) 
+            : largest.emplace(it);
 }
 
 void SplitList::add(long element)
@@ -51,7 +51,7 @@ void SplitList::add(long element)
         largest.emplace(*--smallest.end());
 
         // remove last element in order to keep k smallest
-        smallest.erase(--smallest.end());
+        smallest.erase(smallest.lower_bound(*--smallest.end()));
     }
 }
 
@@ -67,19 +67,19 @@ void SplitList::remove(long element)
         cout << "Element Does Not Exist!" << endl;
 
     // element belongs to largest
-    else if (element >= *largest.begin())
-        largest.erase(element);
+    else if (element >= *smallest.end() - 1)
+        largest.erase(largest.lower_bound(element));
     
     // element belongs to smallest
     else
     {
-        smallest.erase(element);
+        smallest.erase(smallest.lower_bound(element));
 
         // get smallest element from largest
         smallest.emplace(*largest.begin());
 
         // remove smallest element from largest
-        largest.erase(*largest.begin());
+        largest.erase(largest.lower_bound(*largest.begin()));
     }     
 }
 

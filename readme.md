@@ -14,7 +14,7 @@ Compiling
 
     Each program was compiled using clang++ and the c++ standard library 14 without errors nor warnings. Makefiles are used to compile each question and the project as a whole. Running the 'make' command in the question folder will compile that question with all its dependencies whereas executing the make command from the parent folder will compile all five problems in this submission and place the binaries in the respective question folder.
     
-    If CMake is not available please check the respective questions makefile to extract the command used to compile individual programs with their resepctive binaries.
+    If make is not available please check the respective questions makefile to extract the command used to compile individual programs with their respective binaries.
 
     After compilation, the below commands can be executed from the question folder:
 
