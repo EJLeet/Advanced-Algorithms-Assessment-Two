@@ -10,7 +10,7 @@ DisjointSets::DisjointSets(int size)
                                             */
     nodes = size + 1;
 
-    for (int i = 0; i < nodes; i++)
+    for (int i = 0; i <= nodes; i++)
     {
         parent.push_back(i);
         depth.push_back(i);
