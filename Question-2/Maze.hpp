@@ -5,10 +5,7 @@
 
 class Maze
 {
-    // initialise size (L x W)
-    int row, col; 
-    int size = row * col;
-    int start = 0, end = size - 1;
+    int row, col, size, start = 0, end;
 
     class Square
     {/*
@@ -17,7 +14,7 @@ class Maze
         Walls: 1 = wall
         Walls: 2 = border (indestructible)
                                                 */    
-    public:                                                                              
+    public:                                                                            
         int position, top = 1, bot = 1, left = 1, right = 1;
         Square(int p) : position(p) {};
     };
@@ -26,7 +23,7 @@ class Maze
     std::vector<Square> square;
     
 public:
-    Maze(int r, int c) : row(r), col(c) {};
+    Maze(int r, int c) : row(r), col(c), size(r * c), end(r * c - 1){};
 
     // initial setup of maze via command line dimensions
     void initialise();

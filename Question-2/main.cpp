@@ -1,4 +1,5 @@
 #include "Maze.hpp"
+#include "DisjointSets.hpp"
 #include <iostream>
 
 using std::cout;
@@ -33,8 +34,7 @@ void generate(char* r, char* c)
     // destroy until solution
     maze.destroy();
 
-    // display final maze
+    // output final maze
     maze.display();
-
 }
 

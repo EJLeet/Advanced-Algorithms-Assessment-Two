@@ -9,3 +9,4 @@ Q*/*.jpg
 Q*/*.png
 Q*/*.hpp.gch
 Q*/test*.cpp
+Q*/maze.txt
