@@ -25,7 +25,7 @@ Bacon::Bacon(std::string filename)
     bacon1.close();
 }
 
-int Bacon::bacon_number(std::string source, std::string target)
+int Bacon::bacon_distance(std::string source, std::string target)
 {/*
     This method performs a standard BFS on 
     actors and movies. It starts at the actor
@@ -33,7 +33,7 @@ int Bacon::bacon_number(std::string source, std::string target)
     and movies until a link to Bacon is found.
                                                     */
     // initialise start node as source
-    Vertex start = Vertex(true, source);
+    Vertex start = Vertex(source);
 
     // initialise node to reassign
     Vertex node = start;
@@ -53,7 +53,7 @@ int Bacon::bacon_number(std::string source, std::string target)
         graph.pop();
 
         // its an actor
-        if (current.is_actor)
+        if (actors.find(current.actor) != actors.end())
         {
             // traverse actors movies
             for (auto movie : actors[current.actor])
@@ -61,7 +61,7 @@ int Bacon::bacon_number(std::string source, std::string target)
                 // if not visited update nodes
                 if (visited.find(movie) == visited.end())
                 {
-                    node = Vertex(false, movie);
+                    node = Vertex(movie);
                     node.path = current.path;
                     node.path.push_back(current.actor);
                     visited.emplace(movie);
@@ -79,7 +79,7 @@ int Bacon::bacon_number(std::string source, std::string target)
                 // if not visited update nodes
                 if (visited.find(actor) == visited.end())
                 {
-                    node = Vertex(true, actor);
+                    node = Vertex(actor);
                     node.path = current.path;
                     node.path.push_back(current.actor);
 
@@ -106,7 +106,7 @@ std::tuple<std::string, int> Bacon::long_bacon()
     longest path.
                                                 */
     // initialise start node as source
-    Vertex start = Vertex(true, kevin_bacon);
+    Vertex start = Vertex(kevin_bacon);
 
     // initialise node to reassign
     Vertex node = start;
@@ -126,7 +126,7 @@ std::tuple<std::string, int> Bacon::long_bacon()
         graph.pop();
 
         // its an actor
-        if (current.is_actor)
+        if (actors.find(current.actor) != actors.end())
         {
             // traverse actors movies
             for (auto movie : actors[current.actor])
@@ -134,7 +134,7 @@ std::tuple<std::string, int> Bacon::long_bacon()
                 // if not visited update nodes
                 if (visited.find(movie) == visited.end())
                 {
-                    node = Vertex(false, movie);
+                    node = Vertex(movie);
                     node.path = current.path;
                     node.path.push_back(current.actor);
                     visited.emplace(movie);
@@ -152,7 +152,7 @@ std::tuple<std::string, int> Bacon::long_bacon()
                 // if not visited update nodes
                 if (visited.find(actor) == visited.end())
                 {
-                    node = Vertex(true, actor);
+                    node = Vertex(actor);
                     node.path = current.path;
                     node.path.push_back(current.actor);
                     visited.emplace(actor);

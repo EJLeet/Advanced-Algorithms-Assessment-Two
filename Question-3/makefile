@@ -1,2 +1,2 @@
 target:
-	clang++ main.cpp -std=c++14 -o question3 -Ofast
+	clang++ main.cpp veb.hpp veb.cpp -std=c++14 -Ofast

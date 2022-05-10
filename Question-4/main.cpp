@@ -25,7 +25,7 @@ int main()
     start = std::chrono::high_resolution_clock::now(); 
     std::string actor = "Dinah Shore";
 
-    int distance = bacon1.bacon_number(actor, bacon1.kevin_bacon);
+    int distance = bacon1.bacon_distance(actor, bacon1.kevin_bacon);
 
     stop = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast
@@ -64,9 +64,9 @@ int main()
 
     // find an actors bacon number
     start = std::chrono::high_resolution_clock::now(); 
-    actor = "Haruko Togo";
+    actor = "Ernest Abuba";
 
-    distance = bacon2.bacon_number(actor, bacon2.kevin_bacon);
+    distance = bacon2.bacon_distance(actor, bacon2.kevin_bacon);
 
     stop = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast
@@ -106,7 +106,7 @@ int main()
     std::string actor2 = "Grandon Rhodes";
     std::string actor3 = "John Vosburgh";
 
-    distance = bacon3.bacon_number(actor2, actor3);
+    distance = bacon3.bacon_distance(actor2, actor3);
 
     stop = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast
@@ -115,6 +115,7 @@ int main()
     distance == -1 ? cout << "No Solution! " << endl :
                      cout << actor2 << " has a link of " << distance << 
                      " with " << actor3 << " and took " << duration << "ms" << endl;
-
+    cout << endl;
+    
     return 0;
 }

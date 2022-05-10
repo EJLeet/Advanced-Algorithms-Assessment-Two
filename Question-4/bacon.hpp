@@ -16,13 +16,13 @@ class Bacon
         This structure holds info about 
         nodes used in the BFS search.
                                             */
-        bool is_actor = false;
         std::string actor;
         std::vector<std::string> path;
-        Vertex(bool b, std::string s) : is_actor(b), actor(s) {}
+        Vertex(std::string s) : actor(s) {}
     };
-
+    
 public:
+
     // constructor
     Bacon(std::string filename);
 
@@ -30,7 +30,7 @@ public:
     std::string kevin_bacon = "Kevin Bacon (I)";
 
     // returns bacon number between two actors
-    int bacon_number(std::string source, std::string target);
+    int bacon_distance(std::string source, std::string target);
 
     // finds actor with most bacon
     std::tuple<std::string, int> long_bacon();
