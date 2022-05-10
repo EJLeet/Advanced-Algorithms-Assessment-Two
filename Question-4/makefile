@@ -1,2 +1,2 @@
 target:
-	clang++ main.cpp -std=c++14 -o question4 -Ofast
+	clang++ main.cpp bacon.hpp bacon.cpp -std=c++14 -Ofast
