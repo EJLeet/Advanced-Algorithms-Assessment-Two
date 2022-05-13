@@ -32,11 +32,23 @@ Question 1
 
 Question 2
 
+    This question requires two command line arguments to be passed. The length and width of the maze.
+
+    To run this program with a length of 55 and width of 100 the following command can be executed:
+
+    ./a.out 55 100
+
 
 Question 3
 
+    This question requires no command line arguments. The test case functions inside main.cpp can be changed to test any number of integers you would like.
+
 
 Question 4
+
+    This question requires no command line argumenets. The main function is segmented into three parts; 1, 2 and 3 which represent the testing of each of the three bacon files. Actor names are coded on lines 26, 67, 106 and 107.
+
+    The program expects three text files (attached to this submission) to be present. If you would like to change the text files used they must be in the same format. The strings on line 10 can then be updated with the file you wish to test.
 
 
 Question 5

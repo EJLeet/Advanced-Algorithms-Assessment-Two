@@ -12,17 +12,17 @@ Bacon::Bacon(std::string filename)
     either the list of movies they appeared in
     or the list of actors who were in that movie.
                                                     */               
-    std::ifstream bacon1 (filename);
+    std::ifstream file (filename);
     std::string actor, movie;
 
-    while (bacon1)
+    while (file)
     {
-        std::getline(bacon1, actor, '|');
-        std::getline(bacon1, movie, '\n');
+        std::getline(file, actor, '|');
+        std::getline(file, movie, '\n');
         movies[movie].push_back(actor);
         actors[actor].push_back(movie);
     }
-    bacon1.close();
+    file.close();
 }
 
 int Bacon::bacon_distance(std::string source, std::string target)
