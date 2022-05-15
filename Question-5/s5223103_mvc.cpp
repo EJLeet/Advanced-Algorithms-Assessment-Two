@@ -2,6 +2,8 @@
 #include <fstream>
 #include <unordered_map>
 #include <set>
+#include <unordered_set>
+#include <stack>
 #include <random>
 #include <chrono>
 
@@ -9,37 +11,59 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-class LocalSearch
+class MVC
 {
+    // variables used by every algorithm
     int vertices, target;
     std::string graph;
-    bool heuristic = false;
-
-    // creates adj_list from file
-    std::unordered_map<int, std::set<int>> generate(std::string filename);
+    int algorithm = -1;
+/*
+    Algorithm: 1 -> Random Local Search
+    Algorithm: 2 -> Heuristic Local Search
+    Algorithm: 3 -> Depth First Search
+    Algorithm: 4 -> Simmulated Annealing
+                                            */
+public:
+    // constructor initialises class for every algorithm
+    MVC(std::string g, int t, int a) : graph(g), target(t), algorithm(a) {}
     
+    // public driver to run the algorithms
+    void driver();
+
+/****************************************************
+*    Next private and public declerations are for   *
+*    Random and Heuristic Local Search algorithms   *
+****************************************************/
+private:
+    // creates adj_list from file
+    std::tuple<std::unordered_map<int, 
+            std::set<int>>, int> generate(std::string filename);
+
     // randomly identifies edges until a cover is found
-    std::set<int> ls(std::unordered_map<int, std::set<int>> adj_list);
+    std::set<int> ls_minimise_cover(std::unordered_map<int, std::set<int>> adj_list);
     
     // removes edges and their incidents
-    void remove_edge(std::unordered_map<int, std::set<int>>& adj_list, int vertex);
+    void ls_remove_edge(std::unordered_map<int, std::set<int>>& adj_list, int vertex);
    
     // checks if there is valid cover after edge removal
-    bool check_cover(std::unordered_map<int, std::set<int>>& adj_list, 
+    bool ls_check_cover(std::unordered_map<int, std::set<int>>& adj_list, 
                      std::set<int>& cover, int vertex);
 
-public:
-    // constructor takes graph and target
-    LocalSearch(std::string g, int t, bool b) : graph(g), target(t), heuristic(b) {}
+/****************************************************
+*    Next private and public declerations are for   *
+*         the Depth First Search Algorithm          *
+****************************************************/
     
-    // public driver to run the ls aglrithm
-    void driver();
+    
+
+
 };
 
 // uniform random number gen
 std::random_device rand_dev;
 std::mt19937 generator(rand_dev());
 
+// user choice solver
 void solve_choice(int graph, int algorithm, int target);
 
 int main(int argc, char** argv)
@@ -78,9 +102,10 @@ int main(int argc, char** argv)
     cout << "\nAvailable Algorithms: " << endl
          << "1 \t Randomised Local Search" << endl
          << "2 \t Heuristic Local Search" << endl
+         << "3 \t Depth-First Search" << endl
          << "What algorithm would you like to run? ";
     
-    while (!(cin >> algorithm) || (algorithm < 1) || (algorithm > 2))
+    while (!(cin >> algorithm) || (algorithm < 1) || (algorithm > 3))
     {
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -111,14 +136,20 @@ void solve_choice(int graph, int algorithm, int target)
     {
         if (algorithm == 1)
         {
-            LocalSearch ls(brock800_1, target, false);
-            ls.driver();
+            MVC rls(brock800_1, target, 1);
+            rls.driver();
         }
 
         else if (algorithm == 2)
         {
-            LocalSearch ls(brock800_1, target, true);
-            ls.driver();
+            MVC hls(brock800_1, target, 2);
+            hls.driver();
+        }
+
+        else if (algorithm == 3)
+        {
+            MVC dfs(brock800_1, target, 3);
+            dfs.driver();
         }
     }
 
@@ -126,105 +157,147 @@ void solve_choice(int graph, int algorithm, int target)
     {
         if (algorithm == 1)
         {
-            LocalSearch ls(brock800_2, target, false);
-            ls.driver();
+            MVC rls(brock800_2, target, 1);
+            rls.driver();
         }
 
         else if (algorithm == 2)
         {
-            LocalSearch ls(brock800_2, target, true);
-            ls.driver();
-        }        
+            MVC hls(brock800_2, target, 2);
+            hls.driver();
+        }     
+
+        else if (algorithm == 3)
+        {
+            MVC dfs(brock800_2, target, 3);
+            dfs.driver();
+        }   
     }
 
     else if (graph == 3)
     {
         if (algorithm == 1)
         {
-            LocalSearch ls(brock800_3, target, false);
-            ls.driver();
+            MVC rls(brock800_3, target, 1);
+            rls.driver();
         }
 
         else if (algorithm == 2)
         {
-            LocalSearch ls(brock800_3, target, true);
-            ls.driver();
+            MVC hls(brock800_3, target, 2);
+            hls.driver();
         }
+
+        else if (algorithm == 3)
+        {
+            MVC dfs(brock800_3, target, 3);
+            dfs.driver();
+        }  
     }
 
     else if (graph == 4)
     {
         if (algorithm == 1)
         {
-            LocalSearch ls(brock800_4, target, false);
-            ls.driver();
+            MVC rls(brock800_4, target, 1);
+            rls.driver();
         }
 
         else if (algorithm == 2)
         {
-            LocalSearch ls(brock800_4, target, true);
-            ls.driver();
+            MVC hls(brock800_4, target, 2);
+            hls.driver();
         }
+
+        else if (algorithm == 3)
+        {
+            MVC dfs(brock800_4, target, 3);
+            dfs.driver();
+        }  
     }
 
     else if (graph == 5)
     {
         if (algorithm == 1)
         {
-            LocalSearch ls(C2000_9, target, false);
-            ls.driver();
+            MVC rls(C2000_9, target, 1);
+            rls.driver();
         }
 
         else if (algorithm == 2)
         {
-            LocalSearch ls(C2000_9, target, true);
-            ls.driver();
+            MVC hls(C2000_9, target, 2);
+            hls.driver();
         }
+
+        else if (algorithm == 3)
+        {
+            MVC dfs(C2000_9, target, 3);
+            dfs.driver();
+        }  
     }
 
     else if (graph == 6)
     {
         if (algorithm == 1)
         {
-            LocalSearch ls(C4000_5, target, false);
-            ls.driver();
+            MVC rls(C4000_5, target, 1);
+            rls.driver();
         }
 
         else if (algorithm == 2)
         {
-            LocalSearch ls(C4000_5, target, true);
-            ls.driver();
+            MVC hls(C4000_5, target, 2);
+            hls.driver();
         }
+
+        else if (algorithm == 3)
+        {
+            MVC dfs(C4000_5, target, 3);
+            dfs.driver();
+        }  
     }
 
     else if (graph == 7)
     {
         if (algorithm == 1)
         {
-            LocalSearch ls(MANN_a45, target, false);
-            ls.driver();
+            MVC rls(MANN_a45, target, 1);
+            rls.driver();
         }
 
         else if (algorithm == 2)
         {
-            LocalSearch ls(MANN_a45, target, true);
-            ls.driver();
+            MVC hls(MANN_a45, target, 2);
+            hls.driver();
         }
+
+        else if (algorithm == 3)
+        {
+            MVC dfs(MANN_a45, target, 3);
+            dfs.driver();
+        }  
     }
 
     else if (graph == 8)
     {
         if (algorithm == 1)
         {
-            LocalSearch ls(p_hat1500_1, target, false);
-            ls.driver();
+            MVC rls(p_hat1500_1, target, 1);
+            rls.driver();
         }
 
         else if (algorithm == 2)
         {
-            LocalSearch ls(p_hat1500_1, target, true);
-            ls.driver();
+            MVC hls(p_hat1500_1, target, 2);
+            hls.driver();
         }
+
+        else if (algorithm == 3)
+        {
+            MVC dfs(p_hat1500_1, target, 3);
+            dfs.driver();
+        }  
     }
 
     else
@@ -235,12 +308,28 @@ void solve_choice(int graph, int algorithm, int target)
 
 }
 
-void LocalSearch::driver()
+std::tuple<std::unordered_map<int, 
+           std::set<int>>, int> MVC::generate(std::string filename)
+{/*
+    Populate the adjacency list with file
+                                            */
+    std::unordered_map<int, std::set<int>> adj_list;
+    std::ifstream file (filename);
+    int vertices;
+    file >> vertices;
+    int v, u;
+    while (file >> v >> u)
+    {
+        adj_list[v].emplace(u);
+        adj_list[u].emplace(v);
+    }
+    return {adj_list, vertices};
+}
+
+void MVC::driver()
 {/*
     Driver function to perform random local search.
-                                                    */
-    // populate adjacency list
-    std::unordered_map<int, std::set<int>> adj_list = generate(graph);
+                                                        */
 
     std::vector<double> trial_time;
     std::vector<int> total_cover;
@@ -254,19 +343,35 @@ void LocalSearch::driver()
         int current_size = vertices;
         std::set<int> cover;
 
-        // get a minimum
-        std::set<int> minimise = ls(adj_list);
-
-        // ensure its a cover
-        for (int v = 1; v <= adj_list.size(); v++)
-            if (check_cover(adj_list, minimise, v))
-                minimise.erase(v);
-
-        // if size is better than current -> update
-        if (minimise.size() < current_size) 
+        // randomised/heuristic local search
+        if (algorithm == 1 || algorithm == 2)
         {
-            cover = minimise;
-            current_size = minimise.size();
+            // populate adjacency list
+            int v;
+            std::unordered_map<int, std::set<int>> adj_list;
+            std::tie(adj_list, v) = generate(graph);
+            vertices = v;
+
+            // get a minimum
+            std::set<int> minimise = ls_minimise_cover(adj_list);
+
+            // ensure its a cover
+            for (int v = 1; v <= adj_list.size(); v++)
+                if (ls_check_cover(adj_list, minimise, v))
+                    minimise.erase(v);
+
+            // if size is better than current -> update
+            if (minimise.size() < current_size) 
+            {
+                cover = minimise;
+                current_size = minimise.size();
+            }
+        }
+
+        // DFS
+        else if (algorithm == 3)
+        {
+
         }
 
         // get trial time
@@ -280,7 +385,7 @@ void LocalSearch::driver()
 
         // report trial statistics
         cout << "Trial " << i + 1 << "   Cover: " << cover.size() 
-             << "   CPU TIme(ms): " << duration << endl;
+             << "   CPU Time(sec): " << duration << endl;
         
         if (cover.size() <= target)
             successful++;
@@ -296,28 +401,11 @@ void LocalSearch::driver()
     cout << "\nGraph: "<< graph << "\nMinimum Vertex Cover Target: " 
          << target << "\nSuccessful Trials: " << successful 
          << "\nAverage Cover: " << average_cover 
-         << "\nAverage Time(ms): " << average_time << endl;
+         << "\nAverage Time(sec): " << average_time << endl;
 
 }
 
-std::unordered_map<int, std::set<int>> LocalSearch::generate(std::string filename)
-{/*
-    Populate the adjacency list with file
-                                            */
-    std::unordered_map<int, std::set<int>> adj_list;
-    std::ifstream file (filename);
-    file >> vertices;
-    int v, u;
-    while (file >> v >> u)
-    {
-        adj_list[v].emplace(u);
-        adj_list[u].emplace(v);
-    }
-    return adj_list;
-}
-
-std::set<int> LocalSearch::ls(std::unordered_map<int, 
-                                                std::set<int>> adj_list)
+std::set<int> MVC::ls_minimise_cover(std::unordered_map<int, std::set<int>> adj_list)
 {/*
     Delete random edges in order to find a 
     better cover
@@ -327,19 +415,19 @@ std::set<int> LocalSearch::ls(std::unordered_map<int,
     while (!adj_list.empty())
     {
         auto it = adj_list.begin();
-
-        if (heuristic)
+        
+        // get max degree vertex
+        if (algorithm == 2)
         {
-            // get max degree vertex
             auto it = std::max_element(std::begin(adj_list), std::end(adj_list),
             [] (const std::pair<int, std::set<int>> & p1, 
                 const std::pair<int, std::set<int>> & p2) 
             { return p1.second.size() < p2.second.size(); } ); 
         }
 
+        // get a random vertex
         else
         {
-            // get a random vertex
             std::uniform_int_distribution<int> gen(0, adj_list.size() - 1);
             int random = gen(generator);
             it = adj_list.begin();
@@ -353,8 +441,8 @@ std::set<int> LocalSearch::ls(std::unordered_map<int,
         std::advance(ij, random);
 
         // remove edge
-        remove_edge(adj_list, it->first);
-        remove_edge(adj_list, *ij);
+        ls_remove_edge(adj_list, it->first);
+        ls_remove_edge(adj_list, *ij);
 
         // update vertex cover
         cover.emplace(it->first);
@@ -363,8 +451,8 @@ std::set<int> LocalSearch::ls(std::unordered_map<int,
     return cover;
 }
 
-void LocalSearch::remove_edge(std::unordered_map<int, 
-                                    std::set<int>>& adj_list, int vertex)
+void MVC::ls_remove_edge(std::unordered_map<int, 
+                              std::set<int>>& adj_list, int vertex)
 {/*
     Remove all edges that are incident on some vertex.
     Also remove any empty vertices that are present.
@@ -386,8 +474,8 @@ void LocalSearch::remove_edge(std::unordered_map<int,
 
 }
 
-bool LocalSearch::check_cover(std::unordered_map<int, std::set<int>>& adj_list, 
-                                    std::set<int>& cover, int vertex)
+bool MVC::ls_check_cover(std::unordered_map<int, std::set<int>>& adj_list, 
+                              std::set<int>& cover, int vertex)
 {/*
     Method checks if a vertex cover is present 
     after removing an edge.                         */
