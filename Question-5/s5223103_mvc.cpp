@@ -9,16 +9,17 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-class RandomLocalSearch
+class LocalSearch
 {
     int vertices, target;
     std::string graph;
+    bool heuristic = false;
 
     // creates adj_list from file
     std::unordered_map<int, std::set<int>> generate(std::string filename);
     
     // randomly identifies edges until a cover is found
-    std::set<int> minimise_cover(std::unordered_map<int, std::set<int>> adj_list);
+    std::set<int> ls(std::unordered_map<int, std::set<int>> adj_list);
     
     // removes edges and their incidents
     void remove_edge(std::unordered_map<int, std::set<int>>& adj_list, int vertex);
@@ -29,9 +30,9 @@ class RandomLocalSearch
 
 public:
     // constructor takes graph and target
-    RandomLocalSearch(std::string g, int t) : graph(g), target(t) {}
+    LocalSearch(std::string g, int t, bool b) : graph(g), target(t), heuristic(b) {}
     
-    // public driver to run the rls aglrithm
+    // public driver to run the ls aglrithm
     void driver();
 };
 
@@ -76,9 +77,10 @@ int main(int argc, char** argv)
 
     cout << "\nAvailable Algorithms: " << endl
          << "1 \t Randomised Local Search" << endl
+         << "2 \t Heuristic Local Search" << endl
          << "What algorithm would you like to run? ";
     
-    while (!(cin >> algorithm) || (algorithm < 1) || (algorithm > 1))
+    while (!(cin >> algorithm) || (algorithm < 1) || (algorithm > 2))
     {
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -109,8 +111,14 @@ void solve_choice(int graph, int algorithm, int target)
     {
         if (algorithm == 1)
         {
-            RandomLocalSearch rls(brock800_1, target);
-            rls.driver();
+            LocalSearch ls(brock800_1, target, false);
+            ls.driver();
+        }
+
+        else if (algorithm == 2)
+        {
+            LocalSearch ls(brock800_1, target, true);
+            ls.driver();
         }
     }
 
@@ -118,17 +126,29 @@ void solve_choice(int graph, int algorithm, int target)
     {
         if (algorithm == 1)
         {
-            RandomLocalSearch rls(brock800_2, target);
-            rls.driver();
+            LocalSearch ls(brock800_2, target, false);
+            ls.driver();
         }
+
+        else if (algorithm == 2)
+        {
+            LocalSearch ls(brock800_2, target, true);
+            ls.driver();
+        }        
     }
 
     else if (graph == 3)
     {
         if (algorithm == 1)
         {
-            RandomLocalSearch rls(brock800_3, target);
-            rls.driver();
+            LocalSearch ls(brock800_3, target, false);
+            ls.driver();
+        }
+
+        else if (algorithm == 2)
+        {
+            LocalSearch ls(brock800_3, target, true);
+            ls.driver();
         }
     }
 
@@ -136,8 +156,14 @@ void solve_choice(int graph, int algorithm, int target)
     {
         if (algorithm == 1)
         {
-            RandomLocalSearch rls(brock800_4, target);
-            rls.driver();
+            LocalSearch ls(brock800_4, target, false);
+            ls.driver();
+        }
+
+        else if (algorithm == 2)
+        {
+            LocalSearch ls(brock800_4, target, true);
+            ls.driver();
         }
     }
 
@@ -145,8 +171,14 @@ void solve_choice(int graph, int algorithm, int target)
     {
         if (algorithm == 1)
         {
-            RandomLocalSearch rls(C2000_9, target);
-            rls.driver();
+            LocalSearch ls(C2000_9, target, false);
+            ls.driver();
+        }
+
+        else if (algorithm == 2)
+        {
+            LocalSearch ls(C2000_9, target, true);
+            ls.driver();
         }
     }
 
@@ -154,8 +186,14 @@ void solve_choice(int graph, int algorithm, int target)
     {
         if (algorithm == 1)
         {
-            RandomLocalSearch rls(C4000_5, target);
-            rls.driver();
+            LocalSearch ls(C4000_5, target, false);
+            ls.driver();
+        }
+
+        else if (algorithm == 2)
+        {
+            LocalSearch ls(C4000_5, target, true);
+            ls.driver();
         }
     }
 
@@ -163,8 +201,14 @@ void solve_choice(int graph, int algorithm, int target)
     {
         if (algorithm == 1)
         {
-            RandomLocalSearch rls(MANN_a45, target);
-            rls.driver();
+            LocalSearch ls(MANN_a45, target, false);
+            ls.driver();
+        }
+
+        else if (algorithm == 2)
+        {
+            LocalSearch ls(MANN_a45, target, true);
+            ls.driver();
         }
     }
 
@@ -172,8 +216,14 @@ void solve_choice(int graph, int algorithm, int target)
     {
         if (algorithm == 1)
         {
-            RandomLocalSearch rls(p_hat1500_1, target);
-            rls.driver();
+            LocalSearch ls(p_hat1500_1, target, false);
+            ls.driver();
+        }
+
+        else if (algorithm == 2)
+        {
+            LocalSearch ls(p_hat1500_1, target, true);
+            ls.driver();
         }
     }
 
@@ -185,7 +235,7 @@ void solve_choice(int graph, int algorithm, int target)
 
 }
 
-void RandomLocalSearch::driver()
+void LocalSearch::driver()
 {/*
     Driver function to perform random local search.
                                                     */
@@ -205,7 +255,7 @@ void RandomLocalSearch::driver()
         std::set<int> cover;
 
         // get a minimum
-        std::set<int> minimise = minimise_cover(adj_list);
+        std::set<int> minimise = ls(adj_list);
 
         // ensure its a cover
         for (int v = 1; v <= adj_list.size(); v++)
@@ -250,7 +300,7 @@ void RandomLocalSearch::driver()
 
 }
 
-std::unordered_map<int, std::set<int>> RandomLocalSearch::generate(std::string filename)
+std::unordered_map<int, std::set<int>> LocalSearch::generate(std::string filename)
 {/*
     Populate the adjacency list with file
                                             */
@@ -266,25 +316,39 @@ std::unordered_map<int, std::set<int>> RandomLocalSearch::generate(std::string f
     return adj_list;
 }
 
-std::set<int> RandomLocalSearch::minimise_cover(std::unordered_map<int, 
+std::set<int> LocalSearch::ls(std::unordered_map<int, 
                                                 std::set<int>> adj_list)
 {/*
     Delete random edges in order to find a 
     better cover
                                             */
     std::set<int> cover;
-
+    
     while (!adj_list.empty())
     {
-        // get a random vertex
-        std::uniform_int_distribution<int> gen(0, adj_list.size() - 1);
-        int random = gen(generator);
         auto it = adj_list.begin();
-        std::advance(it, random);
+
+        if (heuristic)
+        {
+            // get max degree vertex
+            auto it = std::max_element(std::begin(adj_list), std::end(adj_list),
+            [] (const std::pair<int, std::set<int>> & p1, 
+                const std::pair<int, std::set<int>> & p2) 
+            { return p1.second.size() < p2.second.size(); } ); 
+        }
+
+        else
+        {
+            // get a random vertex
+            std::uniform_int_distribution<int> gen(0, adj_list.size() - 1);
+            int random = gen(generator);
+            it = adj_list.begin();
+            std::advance(it, random);
+        }
 
         // get a random edge
         std::uniform_int_distribution<int> gen_(0, it->second.size() - 1);
-        random = gen_(generator);
+        int random = gen_(generator);
         auto ij = it->second.begin();
         std::advance(ij, random);
 
@@ -299,7 +363,7 @@ std::set<int> RandomLocalSearch::minimise_cover(std::unordered_map<int,
     return cover;
 }
 
-void RandomLocalSearch::remove_edge(std::unordered_map<int, 
+void LocalSearch::remove_edge(std::unordered_map<int, 
                                     std::set<int>>& adj_list, int vertex)
 {/*
     Remove all edges that are incident on some vertex.
@@ -322,7 +386,7 @@ void RandomLocalSearch::remove_edge(std::unordered_map<int,
 
 }
 
-bool RandomLocalSearch::check_cover(std::unordered_map<int, std::set<int>>& adj_list, 
+bool LocalSearch::check_cover(std::unordered_map<int, std::set<int>>& adj_list, 
                                     std::set<int>& cover, int vertex)
 {/*
     Method checks if a vertex cover is present 
