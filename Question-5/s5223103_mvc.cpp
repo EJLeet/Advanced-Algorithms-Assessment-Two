@@ -20,8 +20,7 @@ class MVC
 /*
     Algorithm: 1 -> Random Local Search
     Algorithm: 2 -> Heuristic Local Search
-    Algorithm: 3 -> Depth First Search
-    Algorithm: 4 -> Simmulated Annealing
+    Algorithm: 3 -> Simmulated Annealing
                                             */
 public:
     // constructor initialises class for every algorithm
@@ -51,12 +50,10 @@ private:
 
 /****************************************************
 *    Next private and public declerations are for   *
-*         the Depth First Search Algorithm          *
+*        the Simmulated Annealing Algorithm         *
 ****************************************************/
     
     
-
-
 };
 
 // uniform random number gen
@@ -102,7 +99,7 @@ int main(int argc, char** argv)
     cout << "\nAvailable Algorithms: " << endl
          << "1 \t Randomised Local Search" << endl
          << "2 \t Heuristic Local Search" << endl
-         << "3 \t Depth-First Search" << endl
+         << "3 \t Simmulated Annealing" << endl
          << "What algorithm would you like to run? ";
     
     while (!(cin >> algorithm) || (algorithm < 1) || (algorithm > 3))
@@ -148,8 +145,8 @@ void solve_choice(int graph, int algorithm, int target)
 
         else if (algorithm == 3)
         {
-            MVC dfs(brock800_1, target, 3);
-            dfs.driver();
+            MVC sa(brock800_1, target, 3);
+            sa.driver();
         }
     }
 
@@ -169,8 +166,8 @@ void solve_choice(int graph, int algorithm, int target)
 
         else if (algorithm == 3)
         {
-            MVC dfs(brock800_2, target, 3);
-            dfs.driver();
+            MVC sa(brock800_2, target, 3);
+            sa.driver();
         }   
     }
 
@@ -190,8 +187,8 @@ void solve_choice(int graph, int algorithm, int target)
 
         else if (algorithm == 3)
         {
-            MVC dfs(brock800_3, target, 3);
-            dfs.driver();
+            MVC sa(brock800_3, target, 3);
+            sa.driver();
         }  
     }
 
@@ -211,8 +208,8 @@ void solve_choice(int graph, int algorithm, int target)
 
         else if (algorithm == 3)
         {
-            MVC dfs(brock800_4, target, 3);
-            dfs.driver();
+            MVC sa(brock800_4, target, 3);
+            sa.driver();
         }  
     }
 
@@ -232,8 +229,8 @@ void solve_choice(int graph, int algorithm, int target)
 
         else if (algorithm == 3)
         {
-            MVC dfs(C2000_9, target, 3);
-            dfs.driver();
+            MVC sa(C2000_9, target, 3);
+            sa.driver();
         }  
     }
 
@@ -253,8 +250,8 @@ void solve_choice(int graph, int algorithm, int target)
 
         else if (algorithm == 3)
         {
-            MVC dfs(C4000_5, target, 3);
-            dfs.driver();
+            MVC sa(C4000_5, target, 3);
+            sa.driver();
         }  
     }
 
@@ -274,8 +271,8 @@ void solve_choice(int graph, int algorithm, int target)
 
         else if (algorithm == 3)
         {
-            MVC dfs(MANN_a45, target, 3);
-            dfs.driver();
+            MVC sa(MANN_a45, target, 3);
+            sa.driver();
         }  
     }
 
@@ -295,8 +292,8 @@ void solve_choice(int graph, int algorithm, int target)
 
         else if (algorithm == 3)
         {
-            MVC dfs(p_hat1500_1, target, 3);
-            dfs.driver();
+            MVC sa(p_hat1500_1, target, 3);
+            sa.driver();
         }  
     }
 
@@ -368,7 +365,7 @@ void MVC::driver()
             }
         }
 
-        // DFS
+        // simmulated annealing
         else if (algorithm == 3)
         {
 
@@ -400,6 +397,7 @@ void MVC::driver()
     // report average statistics
     cout << "\nGraph: "<< graph << "\nMinimum Vertex Cover Target: " 
          << target << "\nSuccessful Trials: " << successful 
+         << "\nBest Cover: " << *std::min_element(total_cover.begin(), total_cover.end())
          << "\nAverage Cover: " << average_cover 
          << "\nAverage Time(sec): " << average_time << endl;
 
