@@ -14,9 +14,8 @@ using std::endl;
 class MVC
 {
     // variables used by every algorithm
-    int vertices, target;
+    int vertices, target, algorithm = -1;
     std::string graph;
-    int algorithm = -1;
 /*
     Algorithm: 1 -> Random Local Search
     Algorithm: 2 -> Heuristic Local Search
@@ -129,178 +128,213 @@ void solve_choice(int graph, int algorithm, int target)
                 MANN_a45 = "MANN_a45.clq",
                 p_hat1500_1 = "p_hat1500-1.clq";
     
-    if (graph == 1)
+    switch(graph)
     {
-        if (algorithm == 1)
+        case 1:
         {
-            MVC rls(brock800_1, target, 1);
-            rls.driver();
+            switch(algorithm)
+            {
+                case 1:
+                {
+                    MVC rls(brock800_1, target, 1);
+                    rls.driver();
+                    break;
+                }
+                case 2:
+                {
+                    MVC hls(brock800_1, target, 2);
+                    hls.driver();
+                    break;
+                }
+                case 3:
+                {
+                    MVC sa(brock800_1, target, 3);
+                    sa.driver();
+                    break;
+                }
+            } 
+            break;   
         }
-
-        else if (algorithm == 2)
+        case 2:
         {
-            MVC hls(brock800_1, target, 2);
-            hls.driver();
+            switch(algorithm)
+            {
+                case 1:
+                {
+                    MVC rls(brock800_2, target, 1);
+                    rls.driver();
+                    break;
+                }
+                case 2:
+                {
+                    MVC hls(brock800_2, target, 2);
+                    hls.driver();
+                    break;
+                }
+                case 3:
+                {
+                    MVC sa(brock800_2, target, 3);
+                    sa.driver();
+                    break;
+                }
+            } 
+            break;   
+        }      
+        case 3:
+        {
+            switch(algorithm)
+            {
+                case 1:
+                {
+                    MVC rls(brock800_3, target, 1);
+                    rls.driver();
+                    break;
+                }
+                case 2:
+                {
+                    MVC hls(brock800_3, target, 2);
+                    hls.driver();
+                    break;
+                }
+                case 3:
+                {
+                    MVC sa(brock800_3, target, 3);
+                    sa.driver();
+                    break;
+                }
+            } 
+            break;   
         }
-
-        else if (algorithm == 3)
+        case 4:
         {
-            MVC sa(brock800_1, target, 3);
-            sa.driver();
+            switch(algorithm)
+            {
+                case 1:
+                {
+                    MVC rls(brock800_4, target, 1);
+                    rls.driver();
+                    break;
+                }
+                case 2:
+                {
+                    MVC hls(brock800_4, target, 2);
+                    hls.driver();
+                    break;
+                }
+                case 3:
+                {
+                    MVC sa(brock800_4, target, 3);
+                    sa.driver();
+                    break;
+                }
+            } 
+            break;   
         }
-    }
-
-    else if (graph == 2)
-    {
-        if (algorithm == 1)
+        case 5:
         {
-            MVC rls(brock800_2, target, 1);
-            rls.driver();
+            switch(algorithm)
+            {
+                case 1:
+                {
+                    MVC rls(C2000_9, target, 1);
+                    rls.driver();
+                    break;
+                }
+                case 2:
+                {
+                    MVC hls(C2000_9, target, 2);
+                    hls.driver();
+                    break;
+                }
+                case 3:
+                {
+                    MVC sa(C2000_9, target, 3);
+                    sa.driver();
+                    break;
+                }
+            } 
+            break;   
         }
-
-        else if (algorithm == 2)
+        case 6:
         {
-            MVC hls(brock800_2, target, 2);
-            hls.driver();
-        }     
-
-        else if (algorithm == 3)
-        {
-            MVC sa(brock800_2, target, 3);
-            sa.driver();
-        }   
-    }
-
-    else if (graph == 3)
-    {
-        if (algorithm == 1)
-        {
-            MVC rls(brock800_3, target, 1);
-            rls.driver();
+            switch(algorithm)
+            {
+                case 1:
+                {
+                    MVC rls(C4000_5, target, 1);
+                    rls.driver();
+                    break;
+                }
+                case 2:
+                {
+                    MVC hls(C4000_5, target, 2);
+                    hls.driver();
+                    break;
+                }
+                case 3:
+                {
+                    MVC sa(C4000_5, target, 3);
+                    sa.driver();
+                    break;
+                }
+            } 
+            break;   
         }
-
-        else if (algorithm == 2)
+        case 7:
         {
-            MVC hls(brock800_3, target, 2);
-            hls.driver();
+            switch(algorithm)
+            {
+                case 1:
+                {
+                    MVC rls(MANN_a45, target, 1);
+                    rls.driver();
+                    break;
+                }
+                case 2:
+                {
+                    MVC hls(MANN_a45, target, 2);
+                    hls.driver();
+                    break;
+                }
+                case 3:
+                {
+                    MVC sa(MANN_a45, target, 3);
+                    sa.driver();
+                    break;
+                }
+            } 
+            break;   
         }
-
-        else if (algorithm == 3)
+        case 8:
         {
-            MVC sa(brock800_3, target, 3);
-            sa.driver();
-        }  
-    }
-
-    else if (graph == 4)
-    {
-        if (algorithm == 1)
-        {
-            MVC rls(brock800_4, target, 1);
-            rls.driver();
+            switch(algorithm)
+            {
+                case 1:
+                {
+                    MVC rls(p_hat1500_1, target, 1);
+                    rls.driver();
+                    break;
+                }
+                case 2:
+                {
+                    MVC hls(p_hat1500_1, target, 2);
+                    hls.driver();
+                    break;
+                }
+                case 3:
+                {
+                    MVC sa(p_hat1500_1, target, 3);
+                    sa.driver();
+                    break;
+                }
+            } 
+            break;   
         }
-
-        else if (algorithm == 2)
+        default:
         {
-            MVC hls(brock800_4, target, 2);
-            hls.driver();
+            cout << "Invalid Input -> Exiting!" << endl;
+            exit(1);
         }
-
-        else if (algorithm == 3)
-        {
-            MVC sa(brock800_4, target, 3);
-            sa.driver();
-        }  
-    }
-
-    else if (graph == 5)
-    {
-        if (algorithm == 1)
-        {
-            MVC rls(C2000_9, target, 1);
-            rls.driver();
-        }
-
-        else if (algorithm == 2)
-        {
-            MVC hls(C2000_9, target, 2);
-            hls.driver();
-        }
-
-        else if (algorithm == 3)
-        {
-            MVC sa(C2000_9, target, 3);
-            sa.driver();
-        }  
-    }
-
-    else if (graph == 6)
-    {
-        if (algorithm == 1)
-        {
-            MVC rls(C4000_5, target, 1);
-            rls.driver();
-        }
-
-        else if (algorithm == 2)
-        {
-            MVC hls(C4000_5, target, 2);
-            hls.driver();
-        }
-
-        else if (algorithm == 3)
-        {
-            MVC sa(C4000_5, target, 3);
-            sa.driver();
-        }  
-    }
-
-    else if (graph == 7)
-    {
-        if (algorithm == 1)
-        {
-            MVC rls(MANN_a45, target, 1);
-            rls.driver();
-        }
-
-        else if (algorithm == 2)
-        {
-            MVC hls(MANN_a45, target, 2);
-            hls.driver();
-        }
-
-        else if (algorithm == 3)
-        {
-            MVC sa(MANN_a45, target, 3);
-            sa.driver();
-        }  
-    }
-
-    else if (graph == 8)
-    {
-        if (algorithm == 1)
-        {
-            MVC rls(p_hat1500_1, target, 1);
-            rls.driver();
-        }
-
-        else if (algorithm == 2)
-        {
-            MVC hls(p_hat1500_1, target, 2);
-            hls.driver();
-        }
-
-        else if (algorithm == 3)
-        {
-            MVC sa(p_hat1500_1, target, 3);
-            sa.driver();
-        }  
-    }
-
-    else
-    {
-        cout << "Invalid Input -> Exiting!" << endl;
-        exit(1);
     }
 
 }
@@ -325,8 +359,16 @@ std::tuple<std::unordered_map<int,
 
 void MVC::driver()
 {/*
-    Driver function to perform random local search.
+    Driver function to perform algorithms trial
+    amount of times.
                                                         */
+
+    if (algorithm == 1)
+        cout << "Performing Random Local Search on " << graph << ". Please wait...." << endl;
+    else if (algorithm == 2)
+        cout << "Performing Heuristic Local Search on " << graph << ". Please wait...." << endl;
+    else
+        cout << "Performing Simmulated Annealing on " << graph << ". Please wait...." << endl;
 
     std::vector<double> trial_time;
     std::vector<int> total_cover;
