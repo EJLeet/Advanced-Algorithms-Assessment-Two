@@ -18,7 +18,7 @@ class MVC
     std::string graph;
 /*
     Algorithm: 1 -> Random Local Search
-    Algorithm: 2 -> Heuristic Local Search
+    Algorithm: 2 -> Greedy Local Search
     Algorithm: 3 -> Simmulated Annealing
                                             */
 public:
@@ -30,7 +30,7 @@ public:
 
 /****************************************************
 *    Next private and public declerations are for   *
-*    Random and Heuristic Local Search algorithms   *
+*    Random and Greedy Local Search algorithms   *
 ****************************************************/
 private:
     // creates adj_list from file
@@ -97,7 +97,7 @@ int main(int argc, char** argv)
 
     cout << "\nAvailable Algorithms: " << endl
          << "1 \t Randomised Local Search" << endl
-         << "2 \t Heuristic Local Search" << endl
+         << "2 \t Greedy Local Search" << endl
          << "3 \t Simmulated Annealing" << endl
          << "What algorithm would you like to run? ";
     
@@ -364,11 +364,14 @@ void MVC::driver()
                                                         */
 
     if (algorithm == 1)
-        cout << "Performing Random Local Search on " << graph << ". Please wait...." << endl;
+        cout << "Performing Random Local Search on " 
+             << graph << ". Please wait...." << endl;
     else if (algorithm == 2)
-        cout << "Performing Heuristic Local Search on " << graph << ". Please wait...." << endl;
+        cout << "Performing Greedy Local Search on " 
+             << graph << ". Please wait...." << endl;
     else
-        cout << "Performing Simmulated Annealing on " << graph << ". Please wait...." << endl;
+        cout << "Performing Simmulated Annealing on " 
+             << graph << ". Please wait...." << endl;
 
     std::vector<double> trial_time;
     std::vector<int> total_cover;
@@ -382,7 +385,7 @@ void MVC::driver()
         int current_size = vertices;
         std::set<int> cover;
 
-        // randomised/heuristic local search
+        // randomised/greedy local search
         if (algorithm == 1 || algorithm == 2)
         {
             // populate adjacency list
