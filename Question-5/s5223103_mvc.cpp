@@ -35,7 +35,7 @@ public:
 private:
     // creates adj_list from file
     std::tuple<std::unordered_map<int, 
-            std::set<int>>, int> generate(std::string filename);
+               std::set<int>>, int> generate(std::string filename);
 
     // randomly identifies edges until a cover is found
     std::set<int> ls_minimise_cover(std::unordered_map<int, std::set<int>> adj_list);
@@ -45,7 +45,11 @@ private:
    
     // checks if an edge is already in the cover
     bool ls_visited(std::unordered_map<int, std::set<int>>& adj_list, 
-                     std::set<int>& cover, int vertex);
+                    std::set<int>& cover, int vertex);
+    
+    // ensure final cover is valid
+    bool ls_valid_cover(std::unordered_map<int, std::set<int>> adj_list, 
+                        std::set<int> cover);
 
 /****************************************************
 *    Next private and public declerations are for   *
@@ -361,7 +365,7 @@ void MVC::driver()
 {/*
     Driver function to perform algorithms trial
     amount of times.
-                                                        */
+                                                    */
 
     if (algorithm == 1)
         cout << "Performing Random Local Search on " 
@@ -381,16 +385,14 @@ void MVC::driver()
     for (int i = 0; i < 100; i++) 
     {
         auto start = std::chrono::high_resolution_clock::now(); 
-
-        int current_size = vertices;
+        std::unordered_map<int, std::set<int>> adj_list;
+        int current_size = vertices, v;
         std::set<int> cover;
 
         // randomised/greedy local search
         if (algorithm == 1 || algorithm == 2)
         {
             // populate adjacency list
-            int v;
-            std::unordered_map<int, std::set<int>> adj_list;
             std::tie(adj_list, v) = generate(graph);
             vertices = v;
 
@@ -421,23 +423,42 @@ void MVC::driver()
         auto duration = std::chrono::duration_cast
                         <std::chrono::milliseconds> (stop - start).count() / 1000.;
 
-        // add times to accumulate for every trial
-        trial_time.push_back(duration);
-        total_cover.push_back(cover.size());
+        // ensure final cover is valid
+        if (ls_valid_cover(adj_list, cover))
+        {
+            // add times to accumulate for every trial
+            trial_time.push_back(duration);
+            total_cover.push_back(cover.size());
 
-        // report trial statistics
-        cout << "Trial " << i + 1 << "   Cover: " << cover.size() 
-             << "   CPU Time(sec): " << duration << endl;
-        
-        if (cover.size() <= target)
-            successful++;
+            // report trial statistics
+            cout << "Trial " << i + 1 << "   Cover: " << cover.size() 
+                << "   CPU Time(sec): " << duration << endl;
+
+            if (cover.size() <= target)
+                successful++;
+        }
+        else
+            cout << "Trial " << i + 1 << "   Cover: FAILED"
+                 << "   CPU Time(sec): " << duration << endl;
+            
     }
 
-    // get averages across all trials
-    auto average_time = std::accumulate(trial_time.begin(), trial_time.end(), 0.) 
-                        / trial_time.size();
-    auto average_cover = std::accumulate(total_cover.begin(), total_cover.end(), 0.0) 
+    double average_cover, average_time;
+    // no valid cover was found -> set variables for statistics
+    if (total_cover.size() < 1)
+    {
+        average_cover = 0;
+        total_cover.push_back(0);
+    }
+
+    else
+    {
+        // get averages across all trials
+        average_time = std::accumulate(trial_time.begin(), trial_time.end(), 0.) 
+                       / trial_time.size();
+        average_cover = std::accumulate(total_cover.begin(), total_cover.end(), 0.0) 
                         / total_cover.size();
+    }
 
     // report average statistics
     cout << "\nGraph: "<< graph << "\nMinimum Vertex Cover Target: " 
@@ -525,4 +546,18 @@ bool MVC::ls_visited(std::unordered_map<int, std::set<int>>& adj_list,
         if (cover.find(i) == cover.end())
             return false;
     return true;
+}
+
+bool MVC::ls_valid_cover(std::unordered_map<int, std::set<int>> adj_list, 
+                         std::set<int> cover)
+{/*
+    Method checks if a valid cover exists for a
+    solution by removing all edges that are
+    incident. If a cover exists the result will
+    be an empty adjacency list
+                                                    */
+    for (auto& i : cover)
+        ls_remove_edge(adj_list, i);
+
+    return adj_list.empty();    
 }
