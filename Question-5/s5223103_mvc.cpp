@@ -43,8 +43,8 @@ private:
     // removes edges and their incidents
     void ls_remove_edge(std::unordered_map<int, std::set<int>>& adj_list, int vertex);
    
-    // checks if there is valid cover after edge removal
-    bool ls_check_cover(std::unordered_map<int, std::set<int>>& adj_list, 
+    // checks if an edge is already in the cover
+    bool ls_visited(std::unordered_map<int, std::set<int>>& adj_list, 
                      std::set<int>& cover, int vertex);
 
 /****************************************************
@@ -399,7 +399,7 @@ void MVC::driver()
 
             // ensure its a cover
             for (int v = 1; v <= adj_list.size(); v++)
-                if (ls_check_cover(adj_list, minimise, v))
+                if (ls_visited(adj_list, minimise, v))
                     minimise.erase(v);
 
             // if size is better than current -> update
@@ -450,8 +450,7 @@ void MVC::driver()
 
 std::set<int> MVC::ls_minimise_cover(std::unordered_map<int, std::set<int>> adj_list)
 {/*
-    Delete random edges in order to find a 
-    better cover
+    Minimise cover based on algorithm type
                                             */
     std::set<int> cover;
     
@@ -517,11 +516,11 @@ void MVC::ls_remove_edge(std::unordered_map<int,
 
 }
 
-bool MVC::ls_check_cover(std::unordered_map<int, std::set<int>>& adj_list, 
+bool MVC::ls_visited(std::unordered_map<int, std::set<int>>& adj_list, 
                               std::set<int>& cover, int vertex)
 {/*
-    Method checks if a vertex cover is present 
-    after removing an edge.                         */
+    Checks if a vertex is already in the cover
+                                                */
     for (auto i : adj_list[vertex])
         if (cover.find(i) == cover.end())
             return false;
