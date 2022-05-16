@@ -13,7 +13,6 @@ using std::endl;
 
 class MVC
 {
-    // variables used by every algorithm
     int vertices, target, algorithm = -1;
     std::string graph;
 /*
@@ -21,42 +20,37 @@ class MVC
     Algorithm: 2 -> Greedy Local Search
     Algorithm: 3 -> Simmulated Annealing
                                             */
+
+    // creates adj_list from file
+    std::unordered_map<int, std::set<int>> generate(std::string filename);
+
+    // picks random edges to minimise cover
+    std::set<int> minimise_cover(std::unordered_map<int, std::set<int>> adj_list,
+                                 std::set<std::pair<int, int>> rank);
+    
+    // removes edges and their incidents
+    void remove_edge(std::unordered_map<int, std::set<int>>& adj_list, int vertex);
+   
+    // checks if an edge is already in the cover
+    bool visited(std::unordered_map<int, std::set<int>>& adj_list, 
+                 std::set<int>& cover, int vertex);
+    
+    // ensure final cover is valid
+    bool valid_cover(std::unordered_map<int, std::set<int>> adj_list, 
+                     std::set<int> cover);
+
+    // perform simulated annealing algorithm
+    std::set<int> simulated_annealing(std::unordered_map<int, 
+                                      std::set<int>>& adj_list,
+                                      std::set<std::pair<int, int>>& rank,
+                                      double temperature, double alpha);   
+
 public:
     // constructor initialises class for every algorithm
     MVC(std::string g, int t, int a) : graph(g), target(t), algorithm(a) {}
     
     // public driver to run the algorithms
     void driver();
-
-/****************************************************
-*    Next private and public declerations are for   *
-*    Random and Greedy Local Search algorithms   *
-****************************************************/
-private:
-    // creates adj_list from file
-    std::tuple<std::unordered_map<int, 
-               std::set<int>>, int> generate(std::string filename);
-
-    // randomly identifies edges until a cover is found
-    std::set<int> ls_minimise_cover(std::unordered_map<int, std::set<int>> adj_list);
-    
-    // removes edges and their incidents
-    void ls_remove_edge(std::unordered_map<int, std::set<int>>& adj_list, int vertex);
-   
-    // checks if an edge is already in the cover
-    bool ls_visited(std::unordered_map<int, std::set<int>>& adj_list, 
-                    std::set<int>& cover, int vertex);
-    
-    // ensure final cover is valid
-    bool ls_valid_cover(std::unordered_map<int, std::set<int>> adj_list, 
-                        std::set<int> cover);
-
-/****************************************************
-*    Next private and public declerations are for   *
-*        the Simmulated Annealing Algorithm         *
-****************************************************/
-    
-    
 };
 
 // uniform random number gen
@@ -81,14 +75,14 @@ int main(int argc, char** argv)
          << "**          Ethan Leet          **" << endl
          << "**********************************" << endl << endl
          << "Available Graphs: " << endl
-         << "1 \tbrock800_1.clq" << endl
-         << "2 \tbrock800_2.clq" << endl
-         << "3 \tbrock800_3.clq" << endl
-         << "4 \tbrock800_4.clq" << endl
-         << "5 \tC2000.9.clq" << endl
-         << "6 \tC4000.5.clq" << endl
-         << "7 \tMANN_a45.clq" << endl
-         << "8 \tp_hat1500-1.clq" << endl
+         << "1 \t brock800_1.clq" << endl
+         << "2 \t brock800_2.clq" << endl
+         << "3 \t brock800_3.clq" << endl
+         << "4 \t brock800_4.clq" << endl
+         << "5 \t C2000.9.clq" << endl
+         << "6 \t C4000.5.clq" << endl
+         << "7 \t MANN_a45.clq" << endl
+         << "8 \t p_hat1500-1.clq" << endl
          << "What graph would you like to run? ";
     
 
@@ -102,7 +96,7 @@ int main(int argc, char** argv)
     cout << "\nAvailable Algorithms: " << endl
          << "1 \t Randomised Local Search" << endl
          << "2 \t Greedy Local Search" << endl
-         << "3 \t Simmulated Annealing" << endl
+         << "3 \t Simulated Annealing" << endl
          << "What algorithm would you like to run? ";
     
     while (!(cin >> algorithm) || (algorithm < 1) || (algorithm > 3))
@@ -146,8 +140,8 @@ void solve_choice(int graph, int algorithm, int target)
                 }
                 case 2:
                 {
-                    MVC hls(brock800_1, target, 2);
-                    hls.driver();
+                    MVC gls(brock800_1, target, 2);
+                    gls.driver();
                     break;
                 }
                 case 3:
@@ -171,8 +165,8 @@ void solve_choice(int graph, int algorithm, int target)
                 }
                 case 2:
                 {
-                    MVC hls(brock800_2, target, 2);
-                    hls.driver();
+                    MVC gls(brock800_2, target, 2);
+                    gls.driver();
                     break;
                 }
                 case 3:
@@ -196,8 +190,8 @@ void solve_choice(int graph, int algorithm, int target)
                 }
                 case 2:
                 {
-                    MVC hls(brock800_3, target, 2);
-                    hls.driver();
+                    MVC gls(brock800_3, target, 2);
+                    gls.driver();
                     break;
                 }
                 case 3:
@@ -221,8 +215,8 @@ void solve_choice(int graph, int algorithm, int target)
                 }
                 case 2:
                 {
-                    MVC hls(brock800_4, target, 2);
-                    hls.driver();
+                    MVC gls(brock800_4, target, 2);
+                    gls.driver();
                     break;
                 }
                 case 3:
@@ -246,8 +240,8 @@ void solve_choice(int graph, int algorithm, int target)
                 }
                 case 2:
                 {
-                    MVC hls(C2000_9, target, 2);
-                    hls.driver();
+                    MVC gls(C2000_9, target, 2);
+                    gls.driver();
                     break;
                 }
                 case 3:
@@ -271,8 +265,8 @@ void solve_choice(int graph, int algorithm, int target)
                 }
                 case 2:
                 {
-                    MVC hls(C4000_5, target, 2);
-                    hls.driver();
+                    MVC gls(C4000_5, target, 2);
+                    gls.driver();
                     break;
                 }
                 case 3:
@@ -296,8 +290,8 @@ void solve_choice(int graph, int algorithm, int target)
                 }
                 case 2:
                 {
-                    MVC hls(MANN_a45, target, 2);
-                    hls.driver();
+                    MVC gls(MANN_a45, target, 2);
+                    gls.driver();
                     break;
                 }
                 case 3:
@@ -321,8 +315,8 @@ void solve_choice(int graph, int algorithm, int target)
                 }
                 case 2:
                 {
-                    MVC hls(p_hat1500_1, target, 2);
-                    hls.driver();
+                    MVC gls(p_hat1500_1, target, 2);
+                    gls.driver();
                     break;
                 }
                 case 3:
@@ -343,22 +337,22 @@ void solve_choice(int graph, int algorithm, int target)
 
 }
 
-std::tuple<std::unordered_map<int, 
-           std::set<int>>, int> MVC::generate(std::string filename)
+std::unordered_map<int, std::set<int>> MVC::generate(std::string filename)
 {/*
     Populate the adjacency list with file
                                             */
+
     std::unordered_map<int, std::set<int>> adj_list;
     std::ifstream file (filename);
-    int vertices;
     file >> vertices;
+
     int v, u;
     while (file >> v >> u)
     {
         adj_list[v].emplace(u);
         adj_list[u].emplace(v);
     }
-    return {adj_list, vertices};
+    return adj_list;
 }
 
 void MVC::driver()
@@ -374,7 +368,7 @@ void MVC::driver()
         cout << "Performing Greedy Local Search on " 
              << graph << ". Please wait...." << endl;
     else
-        cout << "Performing Simmulated Annealing on " 
+        cout << "Performing Simulated Annealing on " 
              << graph << ". Please wait...." << endl;
 
     std::vector<double> trial_time;
@@ -386,22 +380,29 @@ void MVC::driver()
     {
         auto start = std::chrono::high_resolution_clock::now(); 
         std::unordered_map<int, std::set<int>> adj_list;
-        int current_size = vertices, v;
-        std::set<int> cover;
+        int current_size = vertices;
+        std::set<int> cover, minimise;
+        std::set<std::pair<int, int>> rank;
+
+        // populate adjacency list
+        adj_list = generate(graph);
+
+        // populate ranks for greedy and SA
+        if (algorithm == 2 || algorithm == 3)
+        {
+            for (auto& i : adj_list)
+                rank.emplace(i.second.size(), i.first);
+        }
 
         // randomised/greedy local search
         if (algorithm == 1 || algorithm == 2)
         {
-            // populate adjacency list
-            std::tie(adj_list, v) = generate(graph);
-            vertices = v;
-
             // get a minimum
-            std::set<int> minimise = ls_minimise_cover(adj_list);
+            minimise = minimise_cover(adj_list, rank);
 
-            // ensure its a cover
+            // ensure its not in cover
             for (int v = 1; v <= adj_list.size(); v++)
-                if (ls_visited(adj_list, minimise, v))
+                if (visited(adj_list, minimise, v))
                     minimise.erase(v);
 
             // if size is better than current -> update
@@ -412,19 +413,26 @@ void MVC::driver()
             }
         }
 
-        // simmulated annealing
+        // simulated annealing
         else if (algorithm == 3)
         {
-
+            minimise = simulated_annealing(adj_list, rank, 100000, 0.90);
+            
+            // if size is better than current -> update
+            if (minimise.size() < current_size) 
+            {
+                cover = minimise;
+                current_size = minimise.size();
+            }
         }
 
         // get trial time
         auto stop = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast
-                        <std::chrono::milliseconds> (stop - start).count() / 1000.;
+            <std::chrono::milliseconds> (stop - start).count() / 1000.;
 
         // ensure final cover is valid
-        if (ls_valid_cover(adj_list, cover))
+        if (valid_cover(adj_list, cover))
         {
             // add times to accumulate for every trial
             trial_time.push_back(duration);
@@ -454,22 +462,25 @@ void MVC::driver()
     else
     {
         // get averages across all trials
-        average_time = std::accumulate(trial_time.begin(), trial_time.end(), 0.) 
-                       / trial_time.size();
-        average_cover = std::accumulate(total_cover.begin(), total_cover.end(), 0.0) 
-                        / total_cover.size();
+        average_time = std::accumulate(trial_time.begin(), 
+                                       trial_time.end(), 0.) 
+                                       / trial_time.size();
+        average_cover = std::accumulate(total_cover.begin(), 
+                                        total_cover.end(), 0.0) 
+                                        / total_cover.size();
     }
 
     // report average statistics
     cout << "\nGraph: "<< graph << "\nMinimum Vertex Cover Target: " 
          << target << "\nSuccessful Trials: " << successful 
-         << "\nBest Cover: " << *std::min_element(total_cover.begin(), total_cover.end())
-         << "\nAverage Cover: " << average_cover 
+         << "\nBest Cover: " << *std::min_element(total_cover.begin(), 
+         total_cover.end()) << "\nAverage Cover: " << average_cover 
          << "\nAverage Time(sec): " << average_time << endl;
-
 }
 
-std::set<int> MVC::ls_minimise_cover(std::unordered_map<int, std::set<int>> adj_list)
+std::set<int> MVC::minimise_cover(std::unordered_map<int, 
+                                  std::set<int>> adj_list,
+                                  std::set<std::pair<int, int>> rank)
 {/*
     Minimise cover based on algorithm type
                                             */
@@ -482,10 +493,8 @@ std::set<int> MVC::ls_minimise_cover(std::unordered_map<int, std::set<int>> adj_
         // get max degree vertex
         if (algorithm == 2)
         {
-            auto it = std::max_element(std::begin(adj_list), std::end(adj_list),
-            [] (const std::pair<int, std::set<int>> & p1, 
-                const std::pair<int, std::set<int>> & p2) 
-            { return p1.second.size() < p2.second.size(); } ); 
+            auto it = *rank.end();
+            rank.erase(it);
         }
 
         // get a random vertex
@@ -504,8 +513,8 @@ std::set<int> MVC::ls_minimise_cover(std::unordered_map<int, std::set<int>> adj_
         std::advance(ij, random);
 
         // remove edge
-        ls_remove_edge(adj_list, it->first);
-        ls_remove_edge(adj_list, *ij);
+        remove_edge(adj_list, it->first);
+        remove_edge(adj_list, *ij);
 
         // update vertex cover
         cover.emplace(it->first);
@@ -514,8 +523,8 @@ std::set<int> MVC::ls_minimise_cover(std::unordered_map<int, std::set<int>> adj_
     return cover;
 }
 
-void MVC::ls_remove_edge(std::unordered_map<int, 
-                              std::set<int>>& adj_list, int vertex)
+void MVC::remove_edge(std::unordered_map<int, 
+                      std::set<int>>& adj_list, int vertex)
 {/*
     Remove all edges that are incident on some vertex.
     Also remove any empty vertices that are present.
@@ -534,11 +543,11 @@ void MVC::ls_remove_edge(std::unordered_map<int,
         adj_list.erase(i);
 
     adj_list.erase(vertex);
-
 }
 
-bool MVC::ls_visited(std::unordered_map<int, std::set<int>>& adj_list, 
-                              std::set<int>& cover, int vertex)
+bool MVC::visited(std::unordered_map<int, 
+                  std::set<int>>& adj_list, 
+                  std::set<int>& cover, int vertex)
 {/*
     Checks if a vertex is already in the cover
                                                 */
@@ -548,16 +557,78 @@ bool MVC::ls_visited(std::unordered_map<int, std::set<int>>& adj_list,
     return true;
 }
 
-bool MVC::ls_valid_cover(std::unordered_map<int, std::set<int>> adj_list, 
+bool MVC::valid_cover(std::unordered_map<int, 
+                         std::set<int>> adj_list, 
                          std::set<int> cover)
 {/*
     Method checks if a valid cover exists for a
     solution by removing all edges that are
-    incident. If a cover exists the result will
-    be an empty adjacency list
+    incident. If a cover exists then all nodes 
+    left in the adjacency list will have no edges.
                                                     */
-    for (auto& i : cover)
-        ls_remove_edge(adj_list, i);
 
-    return adj_list.empty();    
+    for (auto& i : cover)
+        remove_edge(adj_list, i);
+    
+    for (auto& i : adj_list)
+        if (!i.second.empty())  
+            return false;
+    return true;
+}
+
+std::set<int> MVC::simulated_annealing(std::unordered_map<int, 
+                                       std::set<int>>& adj_list,
+                                       std::set<std::pair<int, int>>& rank,
+                                       double temperature, double alpha)
+{/*
+    This method performs the Simulated Annealing 
+    algorithm for each trial. 
+                                                    */
+    std::set<int> solution;
+    int cost = vertices, temp_cost;
+    double new_cost, rho;
+
+    // loop until temperature is below cooled threshold
+    while (temperature > 0.001) 
+    {
+        // get a random vertex
+        std::set<int> temp = minimise_cover(adj_list, rank);
+
+        // minimise cover by deleting vertices
+        for (int v = 1; v <= adj_list.size(); v++)
+            if (visited(adj_list, temp, v))
+                temp.erase(v);
+
+        // get current costs
+        temp_cost = temp.size();
+        new_cost = temp_cost - cost;
+
+        // there is a better solution
+        if (new_cost < 0) 
+        {
+            solution = temp;
+            cost = temp_cost;
+
+        } 
+        
+        // choose a solution based on probability
+        else 
+        {
+            // get probability based off rho
+            rho = exp(-abs(new_cost) / temperature);
+            std::uniform_int_distribution<int> gen(1, 100);
+            int random = gen(generator);
+
+            // accept solution if rho is within probability
+            if (rho > (random / 100.0)) 
+            {
+                solution = temp;
+                cost = temp_cost;
+            }
+        }
+
+        // apply cooling factor
+        temperature *= alpha;
+    }
+    return solution;
 }
