@@ -416,7 +416,7 @@ void MVC::driver()
         // simulated annealing
         else if (algorithm == 3)
         {
-            minimise = simulated_annealing(adj_list, rank, 100000, 0.90);
+            minimise = simulated_annealing(adj_list, rank, 100000, 0.80);
             
             // if size is better than current -> update
             if (minimise.size() < current_size) 
@@ -488,13 +488,13 @@ std::set<int> MVC::minimise_cover(std::unordered_map<int,
     
     while (!adj_list.empty())
     {
-        auto it = adj_list.begin();
+        auto v = adj_list.begin();
         
         // get max degree vertex
         if (algorithm == 2)
         {
-            auto it = *rank.end();
-            rank.erase(it);
+            auto v = *rank.end();
+            rank.erase(v);
         }
 
         // get a random vertex
@@ -502,23 +502,24 @@ std::set<int> MVC::minimise_cover(std::unordered_map<int,
         {
             std::uniform_int_distribution<int> gen(0, adj_list.size() - 1);
             int random = gen(generator);
-            it = adj_list.begin();
-            std::advance(it, random);
+            v = adj_list.begin();
+            std::advance(v, random);
         }
 
         // get a random edge
-        std::uniform_int_distribution<int> gen_(0, it->second.size() - 1);
+        std::uniform_int_distribution<int> gen_(0, v->second.size() - 1);
         int random = gen_(generator);
-        auto ij = it->second.begin();
-        std::advance(ij, random);
-
-        // remove edge
-        remove_edge(adj_list, it->first);
-        remove_edge(adj_list, *ij);
+        auto e = v->second.begin();
+        std::advance(e, random);
 
         // update vertex cover
-        cover.emplace(it->first);
-        cover.emplace(*ij);
+        cover.emplace(v->first);
+        cover.emplace(*e);
+
+        // remove edge
+        remove_edge(adj_list, v->first);
+        remove_edge(adj_list, *e);
+
     }
     return cover;
 }
@@ -586,7 +587,7 @@ std::set<int> MVC::simulated_annealing(std::unordered_map<int,
                                                     */
     std::set<int> solution;
     int cost = vertices, temp_cost;
-    double new_cost, rho;
+    double new_cost;
 
     // loop until temperature is below cooled threshold
     while (temperature > 0.001) 
@@ -608,19 +609,17 @@ std::set<int> MVC::simulated_annealing(std::unordered_map<int,
         {
             solution = temp;
             cost = temp_cost;
-
         } 
         
         // choose a solution based on probability
         else 
         {
             // get probability based off rho
-            rho = exp(-abs(new_cost) / temperature);
             std::uniform_int_distribution<int> gen(1, 100);
             int random = gen(generator);
 
             // accept solution if rho is within probability
-            if (rho > (random / 100.0)) 
+            if (exp(-abs(new_cost) / temperature) > (random / 100.0)) 
             {
                 solution = temp;
                 cost = temp_cost;
