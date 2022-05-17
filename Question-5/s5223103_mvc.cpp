@@ -528,22 +528,22 @@ void MVC::remove_edge(std::unordered_map<int,
                       std::set<int>>& adj_list, int vertex)
 {/*
     Remove all edges that are incident on some vertex.
-    Also remove any empty vertices that are present.
+    Also remove any redundant vertices that are present.
                                                         */
-    std::set<int> empty;
+    std::set<int> redundant;
+
+    adj_list.erase(vertex);
 
     for (auto& i : adj_list)
     {
         i.second.erase(vertex);
 
         if (i.second.empty())
-            empty.emplace(i.first);
+            redundant.emplace(i.first);
     }
 
-    for (int i : empty)
+    for (int i : redundant)
         adj_list.erase(i);
-
-    adj_list.erase(vertex);
 }
 
 bool MVC::visited(std::unordered_map<int, 
@@ -618,7 +618,7 @@ std::set<int> MVC::simulated_annealing(std::unordered_map<int,
             std::uniform_int_distribution<int> gen(1, 100);
             int random = gen(generator);
 
-            // accept solution if rho is within probability
+            // accept solution if rho exceeds probability
             if (exp(-abs(new_cost) / temperature) > (random / 100.0)) 
             {
                 solution = temp;
