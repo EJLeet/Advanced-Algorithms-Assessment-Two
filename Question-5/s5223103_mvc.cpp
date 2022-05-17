@@ -42,8 +42,7 @@ class MVC
     // perform simulated annealing algorithm
     std::set<int> simulated_annealing(std::unordered_map<int, 
                                       std::set<int>>& adj_list,
-                                      std::set<std::pair<int, int>>& rank,
-                                      double temperature, double alpha);   
+                                      std::set<std::pair<int, int>>& rank);   
 
 public:
     // constructor initialises class for every algorithm
@@ -416,7 +415,7 @@ void MVC::driver()
         // simulated annealing
         else if (algorithm == 3)
         {
-            minimise = simulated_annealing(adj_list, rank, 100000, 0.80);
+            minimise = simulated_annealing(adj_list, rank);
             
             // if size is better than current -> update
             if (minimise.size() < current_size) 
@@ -493,8 +492,8 @@ std::set<int> MVC::minimise_cover(std::unordered_map<int,
         // get max degree vertex
         if (algorithm == 2)
         {
-            auto v = *rank.end();
-            rank.erase(v);
+            auto max = *rank.end();
+            rank.erase(max);
         }
 
         // get a random vertex
@@ -579,15 +578,14 @@ bool MVC::valid_cover(std::unordered_map<int,
 
 std::set<int> MVC::simulated_annealing(std::unordered_map<int, 
                                        std::set<int>>& adj_list,
-                                       std::set<std::pair<int, int>>& rank,
-                                       double temperature, double alpha)
+                                       std::set<std::pair<int, int>>& rank)
 {/*
     This method performs the Simulated Annealing 
     algorithm for each trial. 
                                                     */
     std::set<int> solution;
     int cost = vertices, temp_cost;
-    double new_cost;
+    double new_cost, temperature = 100000, alpha = 0.80;
 
     // loop until temperature is below cooled threshold
     while (temperature > 0.001) 
