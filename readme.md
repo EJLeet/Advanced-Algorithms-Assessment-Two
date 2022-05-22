@@ -53,6 +53,7 @@ Question 4
 
 Question 5
 
+    This question requires the eight compliment graphs included in this submission to be present. The program requires a command line argument to be passed which is the target vertex cover.
 
 
 
