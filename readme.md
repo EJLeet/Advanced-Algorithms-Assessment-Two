@@ -8,7 +8,7 @@ AUTHOR
 
 ABOUT
 
-    This assignmnet involved writting c++ code to solve five advanced algorithm problems. As well as submitting c++ source code, a detailed report was to be included which derives the efficiency and proves the validity of each problem, test cases and experiements are also included. Question five required a more in depth analysis compared to the other four programs, and its details are listed within the report.
+    This assignmnet involved writting c++ code to solve five advanced algorithm problems. As well as submitting c++ source code, a detailed report was to be included which derives the efficiency and proves the validity of each problem, test cases and experiements are also included. Question five required a more in depth analysis compared to the other four programs, and its details are listed within the report in a seperate repository.
 
 Compiling
 
@@ -49,10 +49,3 @@ Question 4
     This question requires no command line argumenets. The main function is segmented into three parts; 1, 2 and 3 which represent the testing of each of the three bacon files. Actor names are coded on lines 26, 67, 106 and 107.
 
     The program expects three text files (attached to this submission) to be present. If you would like to change the text files used they must be in the same format. The strings on line 10 can then be updated with the file you wish to test.
-
-
-Question 5
-
-    This question requires the eight compliment graphs included in this submission to be present. The program requires a command line argument to be passed which is the target vertex cover.
-
-    Algorithm and Graph execution decisions are decided during rune time, and can be chosen by entering a choice during run time.
